@@ -32,12 +32,16 @@ fn parse_lists<R: BufRead>(reader: R) -> (Vec<isize>, Vec<isize>) {
         left.push(nums[0]);
         right.push(nums[1]);
     }
-    left.sort();
-    right.sort();
+    left.sort_unstable();
+    right.sort_unstable();
     (left, right)
 }
 
 fn part1(left: &[isize], right: &[isize]) -> isize {
+    // this doesn't work
+    //    let l: isize= left.iter().sum();
+    //    let r: isize= right.iter().sum();
+    //    isize::abs(l-r)
     left.iter()
         .zip(right)
         .fold(0, |acc, (l, r)| acc + (l - r).abs())
@@ -57,16 +61,21 @@ fn main() -> Result<()> {
 
     //region Part 1
     println!("=== Part 1 ===");
+    let test_data = BufReader::new(TEST.as_bytes());
+    let (mut test_left, mut test_right) = parse_lists(test_data);
+    assert_eq!(11, part1(&test_left, &test_right));
+
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
     let (mut left, mut right) = parse_lists(input_file);
-    //assert_eq!(11, part1(&left,&right));
     let result = time_snippet!(part1(&left, &right));
     println!("Result = {}", result);
     //endregion
 
     //region Part 2
     println!("\n=== Part 2 ===");
-    //assert_eq!(31, part2(&left,&right));
+    let test_data = BufReader::new(TEST.as_bytes());
+    let (mut test_left, mut test_right) = parse_lists(test_data);
+    assert_eq!(31, part2(&test_left, &test_right));
     let result = time_snippet!(part2(&left, &right));
     println!("Result = {}", result);
     //endregion
