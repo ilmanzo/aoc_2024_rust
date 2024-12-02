@@ -62,11 +62,11 @@ fn main() -> Result<()> {
     //region Part 1
     println!("=== Part 1 ===");
     let test_data = BufReader::new(TEST.as_bytes());
-    let (mut test_left, mut test_right) = parse_lists(test_data);
+    let (test_left, test_right) = parse_lists(test_data);
     assert_eq!(11, part1(&test_left, &test_right));
 
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
-    let (mut left, mut right) = parse_lists(input_file);
+    let (left, right) = parse_lists(input_file);
     let result = time_snippet!(part1(&left, &right));
     println!("Result = {}", result);
     //endregion
@@ -74,7 +74,7 @@ fn main() -> Result<()> {
     //region Part 2
     println!("\n=== Part 2 ===");
     let test_data = BufReader::new(TEST.as_bytes());
-    let (mut test_left, mut test_right) = parse_lists(test_data);
+    let (test_left, test_right) = parse_lists(test_data);
     assert_eq!(31, part2(&test_left, &test_right));
     let result = time_snippet!(part2(&left, &right));
     println!("Result = {}", result);
