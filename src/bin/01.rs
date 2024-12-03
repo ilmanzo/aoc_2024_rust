@@ -1,5 +1,5 @@
-use adv_code_2024::*;
-use anyhow::*;
+use adv_code_2024::start_day;
+use anyhow::{Ok, Result};
 use code_timing_macros::time_snippet;
 use const_format::concatcp;
 use std::fs::File;
@@ -38,22 +38,15 @@ fn parse_lists<R: BufRead>(reader: R) -> (Vec<isize>, Vec<isize>) {
 }
 
 fn part1(left: &[isize], right: &[isize]) -> isize {
-    // this doesn't work
-    //    let l: isize= left.iter().sum();
-    //    let r: isize= right.iter().sum();
-    //    isize::abs(l-r)
     left.iter()
         .zip(right)
         .fold(0, |acc, (l, r)| acc + (l - r).abs())
 }
 
-fn part2(left: &[isize], right: &[isize]) -> isize {
-    let mut sum = 0;
-    for l in left {
-        let count = right.iter().filter(|r| **r == *l).count();
-        sum += l * count as isize;
-    }
-    sum
+fn part2(left: &[isize], right: &[isize]) -> usize {
+    left.iter()
+        .map(|l| (*l as usize) * right.iter().filter(|r| *r == l).count())
+        .sum()
 }
 
 fn main() -> Result<()> {
@@ -68,7 +61,7 @@ fn main() -> Result<()> {
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
     let (left, right) = parse_lists(input_file);
     let result = time_snippet!(part1(&left, &right));
-    println!("Result = {}", result);
+    println!("Result = {result}");
     //endregion
 
     //region Part 2
@@ -77,7 +70,7 @@ fn main() -> Result<()> {
     let (test_left, test_right) = parse_lists(test_data);
     assert_eq!(31, part2(&test_left, &test_right));
     let result = time_snippet!(part2(&left, &right));
-    println!("Result = {}", result);
+    println!("Result = {result}");
     //endregion
 
     Ok(())

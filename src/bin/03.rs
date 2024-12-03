@@ -1,5 +1,5 @@
-use adv_code_2024::*;
-use anyhow::*;
+use adv_code_2024::start_day;
+use anyhow::{Ok, Result};
 use code_timing_macros::time_snippet;
 use const_format::concatcp;
 use regex::Regex;
@@ -62,7 +62,7 @@ fn main() -> Result<()> {
 
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
     let result = time_snippet!(part1(input_file)?);
-    println!("Result = {}", result);
+    println!("Result = {result}");
     //endregion
 
     //region Part 2
@@ -71,7 +71,7 @@ fn main() -> Result<()> {
     //
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
     let result = time_snippet!(part2(input_file)?);
-    println!("Result = {}", result);
+    println!("Result = {result}");
     //endregion
 
     Ok(())

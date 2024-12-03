@@ -1,5 +1,5 @@
-use adv_code_2024::*;
-use anyhow::*;
+use adv_code_2024::start_day;
+use anyhow::{Ok, Result};
 use code_timing_macros::time_snippet;
 use const_format::concatcp;
 use std::fs::File;
@@ -72,7 +72,7 @@ fn main() -> Result<()> {
     assert_eq!(2, part1(BufReader::new(TEST.as_bytes()))?);
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
     let result = time_snippet!(part1(input_file)?);
-    println!("Result = {}", result);
+    println!("Result = {result}");
     //endregion
 
     //region Part 2
@@ -80,7 +80,7 @@ fn main() -> Result<()> {
     assert_eq!(4, part2(BufReader::new(TEST.as_bytes()))?);
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
     let result = time_snippet!(part2(input_file)?);
-    println!("Result = {}", result);
+    println!("Result = {result}");
     //endregion
 
     Ok(())
