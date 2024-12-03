@@ -17,7 +17,7 @@ const TEST: &str = "\
 3   3
 ";
 
-fn parse_lists<R: BufRead>(reader: R) -> (Vec<isize>, Vec<isize>) {
+fn parse_lists<R: BufRead>(reader: R) -> (Vec<usize>, Vec<usize>) {
     let lines = reader.lines().map(|l| l.unwrap());
     let mut left = Vec::new();
     let mut right = Vec::new();
@@ -27,8 +27,8 @@ fn parse_lists<R: BufRead>(reader: R) -> (Vec<isize>, Vec<isize>) {
         }
         let nums = line
             .split_whitespace()
-            .map(|num| num.parse::<isize>().unwrap())
-            .collect::<Vec<isize>>();
+            .map(|num| num.parse::<usize>().unwrap())
+            .collect::<Vec<usize>>();
         left.push(nums[0]);
         right.push(nums[1]);
     }
@@ -37,15 +37,15 @@ fn parse_lists<R: BufRead>(reader: R) -> (Vec<isize>, Vec<isize>) {
     (left, right)
 }
 
-fn part1(left: &[isize], right: &[isize]) -> isize {
+fn part1(left: &[usize], right: &[usize]) -> usize {
     left.iter()
         .zip(right)
-        .fold(0, |acc, (l, r)| acc + (l - r).abs())
+        .fold(0, |acc, (l, r)| acc + l.abs_diff(*r))
 }
 
-fn part2(left: &[isize], right: &[isize]) -> usize {
+fn part2(left: &[usize], right: &[usize]) -> usize {
     left.iter()
-        .map(|l| (*l as usize) * right.iter().filter(|r| *r == l).count())
+        .map(|l| (*l) * right.iter().filter(|r| *r == l).count())
         .sum()
 }
 

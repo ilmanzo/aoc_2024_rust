@@ -1,4 +1,4 @@
-use adv_code_2024::start_day;
+use adv_code_2024::{start_day,read_input};
 use anyhow::{Ok, Result};
 use code_timing_macros::time_snippet;
 use const_format::concatcp;
@@ -17,9 +17,9 @@ const TEST2: &str = "\
 xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))
 ";
 
-fn part1<R: BufRead>(mut reader: R) -> Result<usize> {
-    let mut data = String::new();
-    let _chars = reader.read_to_string(&mut data);
+
+fn part1<R: BufRead>(reader: R) -> Result<usize> {
+    let data = read_input(reader)?;
     let instruction = Regex::new(r"mul\((\d+),(\d+)\)").unwrap();
     let mut result = 0;
     for (_, [op1, op2]) in instruction.captures_iter(&data).map(|c| c.extract()) {
@@ -28,25 +28,24 @@ fn part1<R: BufRead>(mut reader: R) -> Result<usize> {
     Ok(result)
 }
 
-fn part2<R: BufRead>(mut reader: R) -> Result<usize> {
-    let mut data = String::new();
-    let _chars = reader.read_to_string(&mut data);
+fn part2<R: BufRead>(reader: R) -> Result<usize> {
+    let data = read_input(reader)?;
     let instruction =
         Regex::new(r"(?:mul\((?<op1>\d+),(?<op2>\d+)\))|(?<on>do\(\))|(?<off>don't\(\))").unwrap();
     let mut flag = true;
     let mut result = 0;
 
-    for cap in instruction.captures_iter(&data) {
-        if cap.name("on").is_some() {
+    for capture in instruction.captures_iter(&data) {
+        if capture.name("on").is_some() {
             flag = true;
             continue;
         }
-        if cap.name("off").is_some() {
+        if capture.name("off").is_some() {
             flag = false;
             continue;
         }
         if flag {
-            let (num1, num2) = (&cap["op1"], &cap["op2"]);
+            let (num1, num2) = (&capture["op1"], &capture["op2"]);
             result += num1.parse::<usize>().unwrap() * num2.parse::<usize>().unwrap();
         }
     }
