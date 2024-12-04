@@ -1,4 +1,4 @@
-use adv_code_2024::{start_day,read_input};
+use adv_code_2024::{read_input, start_day};
 use anyhow::{Ok, Result};
 use code_timing_macros::time_snippet;
 use const_format::concatcp;
@@ -16,7 +16,6 @@ xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))
 const TEST2: &str = "\
 xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))
 ";
-
 
 fn part1<R: BufRead>(reader: R) -> Result<usize> {
     let data = read_input(reader)?;
